@@ -1,0 +1,19 @@
+---
+- name: Configure IIS
+  hosts: windows
+
+  tasks:
+    - name: Install IIS
+      ansible.windows.win_feature:
+        name: Web-Server
+        state: present
+
+    - name: Start IIS service
+      ansible.windows.win_service:
+        name: W3Svc
+        state: started
+
+    - name: Create website index.html
+      ansible.windows.win_copy:
+        src: files/web.html
+        dest: C:\Inetpub\wwwroot\index.html
